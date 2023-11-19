@@ -10,6 +10,7 @@ brazil_covid_region_df = pd.read_csv("brazil_covid19.csv")
 brazil_covid_df["date"] = pd.to_datetime(brazil_covid_df["date"])
 brazil_covid_region_df["date"] = pd.to_datetime(brazil_covid_region_df["date"]).dt.date
 
+
 st.set_page_config(page_title="Dashboard",
                    page_icon=":bar_chart:",
                    layout="wide")
@@ -22,6 +23,7 @@ hide_st_style = """
 
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
+
 # Muda a cor do sidebar
 st.markdown("""
     <style>
@@ -31,10 +33,11 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
+
 with st.container():
     st.sidebar.header("Sistema Nexus")
     st.sidebar.image("rounded-logo.png", width=150)
-    selected_chart = st.sidebar.radio("Filtros", ["Por Cidade e Estado", "Por Região", "Por Número de Óbitos"])
+    selected_chart = st.sidebar.radio("Filtros", ["Por Cidade e Estado", "Por Região", "Por Número de Óbitos", "Visualizar Mapa"])
 
 with st.container():
     colored_header(
