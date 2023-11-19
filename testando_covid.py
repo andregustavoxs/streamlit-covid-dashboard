@@ -64,7 +64,7 @@ def createMap(data, value_data, scale, map_filter):
         state = row["state"]
         value = row[value_data]
 
-        if state == "DF" and value_data == "deaths":
+        if state == "DF":
             marker_size = 100
         else:
             marker_size = value * scale
