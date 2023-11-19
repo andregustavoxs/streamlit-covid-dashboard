@@ -24,7 +24,7 @@ hide_st_style = """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
 
-# Muda a cor do sidebar
+# # Muda a cor do sidebar
 st.markdown("""
     <style>
         [data-testid=stSidebar] {
