@@ -56,16 +56,23 @@ def createMap(data, value_data, scale, map_filter):
 
     text = tradutor.translate(value_data)
 
-    print(data.loc[:, "state":value_data])
-    print(list(data.items()))
+    # Pega o valor máximo do Series value_data ("deaths" ou "cases")
+    max_value = data[value_data].max()
 
     # Percorre cada instância (linha) de DataFrameGroupBy
-    for index, row in data.iterrows():
+    for _, row in data.iterrows():
         state = row["state"]
         value = row[value_data]
 
-        if state == "DF":
-            marker_size = 100
+
+        # Reduz a diferença de tamanho do maior valor em relação ao restante
+        if value == max_value:
+
+            if map_filter == "Soma":
+                marker_size = value * (scale - scale / 3)
+            else: 
+                marker_size = value * (scale - scale / 1.09)
+
         else:
             marker_size = value * scale
 
@@ -75,7 +82,7 @@ def createMap(data, value_data, scale, map_filter):
             locationmode="ISO-3",
             lat=[coordinates[state][0]],
             lon=[coordinates[state][1]],
-            text=[f"{state}: {value} {text}"],
+            text=[f"{state}: {str(round(value,2)).replace('.', ',')} {text}"],
             mode="markers",
             marker={
                 "size": marker_size,
@@ -103,7 +110,6 @@ def createMap(data, value_data, scale, map_filter):
         },
         width = 800,
         height = 800,
-
     )
 
     return fig
