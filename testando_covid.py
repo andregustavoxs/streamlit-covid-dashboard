@@ -64,14 +64,15 @@ def createMap(data, value_data, scale, map_filter):
         state = row["state"]
         value = row[value_data]
 
+
         # Reduz a diferença de tamanho do maior valor em relação ao restante
         if value == max_value:
-
 
             if map_filter == "Soma":
                 marker_size = value * (scale - scale / 3)
             else: 
                 marker_size = value * (scale - scale / 1.09)
+
         else:
             marker_size = value * scale
 
