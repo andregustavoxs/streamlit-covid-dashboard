@@ -2,3 +2,4 @@ streamlit~=1.28.1
 pandas~=2.1.2
 plotly~=5.18.0
 streamlit-extras==0.3.5
+deep-translator==1.11.4
