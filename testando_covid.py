@@ -6,7 +6,6 @@ from streamlit_extras.dataframe_explorer import dataframe_explorer
 from streamlit_extras.colored_header import colored_header
 from deep_translator import GoogleTranslator
 
-
 def createMap(data, value_data, scale, map_filter):
     coordinates = {
         'AC': (-8.77, -70.55),
@@ -65,6 +64,11 @@ def createMap(data, value_data, scale, map_filter):
         state = row["state"]
         value = row[value_data]
 
+        if state == "DF" and value_data == "deaths":
+            marker_size = 100
+        else:
+            marker_size = value * scale
+
         # Adiciona um novo gráfico (objeto Scattergeo) dentro do objeto Figure
         fig.add_trace(go.Scattergeo(
             name=state,
@@ -74,7 +78,7 @@ def createMap(data, value_data, scale, map_filter):
             text=[f"{state}: {value} {text}"],
             mode="markers",
             marker={
-                "size": value * scale,
+                "size": marker_size,
                 "opacity": 0.7,
                 "reversescale": True,
                 "autocolorscale": True,
@@ -96,7 +100,11 @@ def createMap(data, value_data, scale, map_filter):
                 "lat": -12
             },
             "projection_scale": 4
-        })
+        },
+        width = 800,
+        height = 800,
+
+    )
 
     return fig
 
@@ -229,8 +237,17 @@ elif selected_chart == "Visualizar Mapas":
 
         # Retorna um booleano
         if st.button("Exibir Gráficos", key="botao2"):
-            map_graph_deaths = createMap(brazil_covid_df, "deaths", 0.000005, filtro)
-            st.plotly_chart(map_graph_deaths)
 
-            map_graph_cases = createMap(brazil_covid_df, "cases", 0.0000001, filtro)
-            st.plotly_chart(map_graph_cases)
+            if filtro == "Soma":
+                map_graph_deaths = createMap(brazil_covid_df, "deaths", 0.000005, filtro)
+                st.plotly_chart(map_graph_deaths)
+
+                map_graph_cases = createMap(brazil_covid_df, "cases", 0.0000001, filtro)
+                st.plotly_chart(map_graph_cases)
+
+            else:
+                map_graph_deaths = createMap(brazil_covid_df, "deaths", 0.35, filtro)
+                st.plotly_chart(map_graph_deaths)
+
+                map_graph_cases = createMap(brazil_covid_df, "cases", 0.01, filtro)
+                st.plotly_chart(map_graph_cases)
